@@ -2,18 +2,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/recipeFragment">
+    app:startDestination="@id/recipeListFragment">
 
-    <fragment
-        android:id="@+id/recipeFragment"
-        android:name="com.bisht.recipejetpackcomposeapp.presentation.ui.Recipe.RecipeFragment"
-        android:label="RecipeFragment" >
-        <action
-            android:id="@+id/action_recipeFragment_to_recipeListFragment"
-            app:destination="@id/recipeListFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/recipeListFragment"
         android:name="com.bisht.recipejetpackcomposeapp.presentation.ui.RecipList.RecipeListFragment"
-        android:label="RecipeListFragment" />
+        android:label="RecipeListFragment" >
+        <action
+            android:id="@+id/action_recipeListFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.bisht.recipejetpackcomposeapp.presentation.ui.Recipe.RecipeFragment"
+        android:label="RecipeFragment" />
 </navigation>
