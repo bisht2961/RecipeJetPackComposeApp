@@ -9,11 +9,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bisht.recipejetpackcomposeapp.R
 import com.bisht.recipejetpackcomposeapp.domain.model.Recipe
+import com.bisht.recipejetpackcomposeapp.utils.DEFAULT_RECIPE_IMAGE
+import com.bisht.recipejetpackcomposeapp.utils.loadPicture
 
 @Composable
 fun RecipeCard(
@@ -33,14 +36,17 @@ fun RecipeCard(
     ) {
         Column {
             recipe.featuredImage?.let { url ->
-                Image(
-                    painter = painterResource(id = R.drawable.empty_plate),
-                    "Empty Plate",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(225.dp),
-                    contentScale = ContentScale.Crop
-                )
+                val image = loadPicture(url = url, defaultImage = DEFAULT_RECIPE_IMAGE).value
+                image?.let { img ->
+                    Image(
+                        bitmap = img.asImageBitmap(),
+                        "Empty Plate",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(225.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
             recipe.title?.let { title ->
                 Row(
@@ -51,7 +57,7 @@ fun RecipeCard(
                     Text(
                         text = title,
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .fillMaxWidth(0.85f)
                             .wrapContentWidth(Alignment.Start),
                         style = MaterialTheme.typography.h5
                     )
