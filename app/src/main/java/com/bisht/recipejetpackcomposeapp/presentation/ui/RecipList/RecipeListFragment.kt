@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
@@ -32,6 +33,7 @@ import androidx.fragment.app.viewModels
 import com.bisht.recipejetpackcomposeapp.presentation.Components.FoodCategoryChip
 import com.bisht.recipejetpackcomposeapp.presentation.Components.RecipeCard
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.format.TextStyle
 
 @AndroidEntryPoint
@@ -91,11 +93,14 @@ class RecipeListFragment: Fragment() {
                                 )
 
                             }
+                            val scrollState = rememberScrollState()
+                            val scope = rememberCoroutineScope()
                             Row(
                                 modifier = Modifier
-                                    .horizontalScroll(rememberScrollState())
-                                    .padding(top = 8.dp,start = 8.dp,bottom = 8.dp)
+                                    .horizontalScroll(scrollState)
+                                    .padding(top = 8.dp, start = 8.dp, bottom = 8.dp)
                             ){
+                                scope.launch { scrollState.scrollTo(viewModel.categoryScrollPosition) }
                                 for ( foodCategory in getAllFoodCategories()){
                                     FoodCategoryChip(
                                         category = foodCategory.value,
@@ -103,6 +108,7 @@ class RecipeListFragment: Fragment() {
                                         onExecuteSearch = viewModel::newSearch,
                                         onSelectedCategoryChanged = {
                                             viewModel.onSelectedCategoryChanged(it)
+                                            viewModel.onChangeCategoryScrollPosition(scrollState.value)
                                         }
                                     )
                                 }
