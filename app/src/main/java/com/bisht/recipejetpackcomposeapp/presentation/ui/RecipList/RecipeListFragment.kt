@@ -46,9 +46,12 @@ class RecipeListFragment: Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
+
                 val recipes = viewModel.recipes.value
                 val query = viewModel.query.value
                 val focusManager = LocalFocusManager.current
+                val selectedCategory = viewModel.selectedCategory.value
+
                 Column{
                     Surface(
                         elevation = 8.dp,
@@ -76,7 +79,7 @@ class RecipeListFragment: Fragment() {
                                         Icon(Icons.Filled.Search,"Icon")
                                     },
                                     keyboardActions = KeyboardActions( onSearch = {
-                                        viewModel.newSearch(query)
+                                        viewModel.newSearch()
                                         focusManager.clearFocus()
                                     }),
                                     textStyle = androidx.compose.ui.text.TextStyle(
@@ -91,15 +94,16 @@ class RecipeListFragment: Fragment() {
                             Row(
                                 modifier = Modifier
                                     .horizontalScroll(rememberScrollState())
-                                    .padding(5.dp)
+                                    .padding(top = 8.dp,start = 8.dp,bottom = 8.dp)
                             ){
                                 for ( foodCategory in getAllFoodCategories()){
                                     FoodCategoryChip(
                                         category = foodCategory.value,
-                                        onExecuteSearch = {
-                                            viewModel.onQueryChanged(it)
-                                            viewModel.newSearch(it)
-                                        },
+                                        isSelected = selectedCategory == foodCategory,
+                                        onExecuteSearch = viewModel::newSearch,
+                                        onSelectedCategoryChanged = {
+                                            viewModel.onSelectedCategoryChanged(it)
+                                        }
                                     )
                                 }
                             }

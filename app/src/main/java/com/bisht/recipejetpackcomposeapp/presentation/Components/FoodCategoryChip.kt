@@ -3,6 +3,7 @@ package com.bisht.recipejetpackcomposeapp.presentation.Components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -15,22 +16,30 @@ import com.bisht.recipejetpackcomposeapp.presentation.ui.RecipList.FoodCategory
 @Composable
 fun FoodCategoryChip(
     category: String,
-    onExecuteSearch: (String) -> Unit,
+    isSelected: Boolean = false,
+    onSelectedCategoryChanged: (String) -> Unit,
+    onExecuteSearch: () -> Unit,
 ){
     Surface(
         modifier = Modifier.padding(end = 8.dp),
         elevation = 8.dp,
         shape = MaterialTheme.shapes.medium,
-        color = MaterialTheme.colors.primary
+        color = if ( isSelected) Color.White else MaterialTheme.colors.primary
     ) {
         Row(
             modifier = Modifier
-                .clickable(onClick = {onExecuteSearch(category)})
+                .toggleable(
+                    value = isSelected,
+                    onValueChange = {
+                        onSelectedCategoryChanged(category)
+                        onExecuteSearch()
+                    }
+                )
         ) {
             Text(
                 text = category,
                 style = MaterialTheme.typography.body2,
-                color = Color.White,
+                color = if ( isSelected) Color.Blue else Color.White,
                 modifier = Modifier.padding(8.dp)
             )
         }
