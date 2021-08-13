@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -52,36 +54,50 @@ class RecipeListFragment: Fragment() {
                             .fillMaxWidth(),
                         color = MaterialTheme.colors.primary,
                     ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth()
-                        ){
-                            TextField(
-                                value = query,
-                                onValueChange = {
-                                    viewModel.onQueryChanged(it)
-                                },
-                                label = {
-                                    Text( text = "Search")
-                                },
-                                keyboardOptions = KeyboardOptions(
-                                    keyboardType = KeyboardType.Text,
-                                    imeAction = ImeAction.Search,
-                                ),
-                                leadingIcon = {
-                                    Icon(Icons.Filled.Search,"Icon")
-                                },
-                                keyboardActions = KeyboardActions( onSearch = {
-                                    viewModel.newSearch(query)
-                                    focusManager?.clearFocus()
-                                }),
-                                textStyle = androidx.compose.ui.text.TextStyle(
-                                    color = MaterialTheme.colors.onSurface
-                                ),
-                                colors = TextFieldDefaults.textFieldColors(
-                                    backgroundColor = MaterialTheme.colors.surface
+                        Column {
+                            Row(
+                                modifier = Modifier.fillMaxWidth()
+                            ){
+                                TextField(
+                                    value = query,
+                                    onValueChange = {
+                                        viewModel.onQueryChanged(it)
+                                    },
+                                    label = {
+                                        Text( text = "Search")
+                                    },
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Search,
+                                    ),
+                                    leadingIcon = {
+                                        Icon(Icons.Filled.Search,"Icon")
+                                    },
+                                    keyboardActions = KeyboardActions( onSearch = {
+                                        viewModel.newSearch(query)
+                                        focusManager.clearFocus()
+                                    }),
+                                    textStyle = androidx.compose.ui.text.TextStyle(
+                                        color = MaterialTheme.colors.onSurface
+                                    ),
+                                    colors = TextFieldDefaults.textFieldColors(
+                                        backgroundColor = MaterialTheme.colors.surface
+                                    )
                                 )
-                            )
 
+                            }
+                            Row(
+                                modifier = Modifier
+                                    .horizontalScroll(rememberScrollState())
+                                    .padding(5.dp)
+                            ) {
+                                for ( foodCategory in getAllFoodCategories()){
+                                    Text(
+                                        text = foodCategory.toString(),
+                                        modifier = Modifier.padding(5.dp)
+                                    )
+                                }
+                            }
                         }
                     }
                     LazyColumn {
