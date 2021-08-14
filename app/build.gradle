@@ -74,4 +74,6 @@ dependencies {
     // glide lib
     implementation "com.github.bumptech.glide:glide:4.12.0"
     annotationProcessor "com.github.bumptech.glide:compiler:4.12.0"
+    // jetpack constraint layout
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
 }

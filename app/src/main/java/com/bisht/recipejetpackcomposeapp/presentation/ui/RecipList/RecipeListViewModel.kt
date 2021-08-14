@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.bisht.recipejetpackcomposeapp.domain.model.Recipe
 import com.bisht.recipejetpackcomposeapp.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
@@ -22,6 +23,7 @@ class RecipeListViewModel @Inject constructor(
     val query = mutableStateOf("")
     val selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
     var categoryScrollPosition: Int = 0
+    val loading = mutableStateOf(false)
 
     init {
         newSearch()
@@ -29,13 +31,28 @@ class RecipeListViewModel @Inject constructor(
 
     fun newSearch() {
         viewModelScope.launch {
+            loading.value = true
+            resetSearchState()
+            delay(2000)
             val result = repository.search(
                 token = token,
                 page = 1,
                 query = query.value
             )
+            loading.value = false
             recipes.value = result
         }
+    }
+
+    private fun resetSearchState(){
+        recipes.value = listOf()
+        if(selectedCategory.value?.value != query.value){
+            clearSelectedCategory()
+        }
+    }
+
+    private fun clearSelectedCategory(){
+        selectedCategory.value = null
     }
 
     fun onQueryChanged( query: String){
