@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
+import com.bisht.recipejetpackcomposeapp.presentation.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,11 +25,13 @@ class RecipeFragment:Fragment() {
     ): View{
         val view = ComposeView(requireContext()).apply{
             setContent {
-                Column( modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "RECIPE FRAGMENT",
-                        fontSize = 21.sp
-                    )
+                AppTheme(darkTheme = false) {
+                    Column( modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = "RECIPE FRAGMENT",
+                            fontSize = 21.sp
+                        )
+                    }
                 }
             }
         }
