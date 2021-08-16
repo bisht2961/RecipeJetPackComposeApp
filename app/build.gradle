@@ -76,4 +76,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:4.12.0"
     // jetpack constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
+    // jetpack compose animation
+    implementation "androidx.compose.animation:animation:$compose_version"
+    implementation "androidx.compose.animation:animation-core:$compose_version"
 }
