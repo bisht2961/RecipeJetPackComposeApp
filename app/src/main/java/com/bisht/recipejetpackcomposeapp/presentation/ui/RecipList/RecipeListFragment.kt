@@ -46,6 +46,8 @@ class RecipeListFragment: Fragment() {
                     val selectedCategory = viewModel.selectedCategory.value
                     val loading = viewModel.loading
 
+
+
                     Column {
                         SearchAppBar(
                             query = query,

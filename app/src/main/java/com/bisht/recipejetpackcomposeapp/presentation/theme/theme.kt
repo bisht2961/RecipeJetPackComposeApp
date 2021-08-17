@@ -2,6 +2,7 @@ package com.bisht.recipejetpackcomposeapp.presentation.theme
 
 import android.annotation.SuppressLint
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Shapes
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
@@ -10,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 
 @SuppressLint("ConflictingOnColor")
 private val LightThemeColors = lightColors(
-    primary = Blue600,
+    primary = Blue700,
     primaryVariant = Blue400,
     onPrimary = Black2,
     secondary = Color.White,
@@ -25,7 +26,7 @@ private val LightThemeColors = lightColors(
 )
 
 private val DarkThemeColors = darkColors(
-    primary = Blue700,
+    primary = Blue400,
     primaryVariant = Color.White,
     onPrimary = Color.White,
     secondary = Black1,
@@ -44,6 +45,8 @@ fun AppTheme(
 ) {
     MaterialTheme(
         colors = if (darkTheme) DarkThemeColors else LightThemeColors,
+        typography = QuickSandTypography,
+        shapes = AppShapes
     ){
         content()
     }

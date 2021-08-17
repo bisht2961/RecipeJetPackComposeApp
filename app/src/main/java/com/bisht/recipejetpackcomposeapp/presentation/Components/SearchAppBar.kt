@@ -64,11 +64,9 @@ fun SearchAppBar(
                             onExecuteSearch()
                             focusManager.clearFocus()
                         }),
-                        textStyle = TextStyle(
-                            color = MaterialTheme.colors.onSurface
-                        ),
                         colors = TextFieldDefaults.textFieldColors(
-                            backgroundColor = MaterialTheme.colors.surface
+                            backgroundColor = MaterialTheme.colors.surface,
+                            textColor = MaterialTheme.colors.primary
                         ),
                         modifier = Modifier
                             .fillMaxWidth(.9f)
