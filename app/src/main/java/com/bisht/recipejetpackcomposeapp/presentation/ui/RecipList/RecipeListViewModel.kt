@@ -67,7 +67,6 @@ class RecipeListViewModel @Inject constructor(
 
     fun onChangeCategoryScrollPosition( position: Float ){
         categoryScrollPosition = position.toInt()
-
     }
 
 }
